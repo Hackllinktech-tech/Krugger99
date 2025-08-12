@@ -7,9 +7,9 @@ const crypto = require('crypto');
 
 // Database credentials
 const DB_SERVER = "sql8.freesqldatabase.com";
-const DB_USERNAME = "sql8794565";
-const DB_PASSWORD = "xpw1fvexwS";
-const DB_NAME = "sql8794565";
+const DB_USERNAME = "sql8794627";
+const DB_PASSWORD = "BXrQfkfX9k";
+const DB_NAME = "sql8794627";
 
 // Helper function (similar to PHP's htmlspecialchars/trim/stripslashes)
 function validate(value) {
