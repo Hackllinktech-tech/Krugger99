@@ -9,22 +9,25 @@ router.post('/signup/check_availability', async (req, res) => {
     const db = new Database();
     let response = { usernameExists: false, emailExists: false };
 
+    // Check email if provided
     if (req.body.email) {
       const email = db.validate(req.body.email);
       const emailCheck = await db.select('users', ['email'], 'email = ?', [email]);
       if (emailCheck.length > 0) response.emailExists = true;
     }
 
+    // Check username if provided
     if (req.body.username) {
       const username = db.validate(req.body.username);
       const usernameCheck = await db.select('users', ['username'], 'username = ?', [username]);
       if (usernameCheck.length > 0) response.usernameExists = true;
     }
 
-    res.json(response);
+    return res.json(response);
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Server error checking availability.' });
+    console.error('❌ Error checking username/email:', err);
+    return res.status(500).json({ error: 'Server error checking availability.' });
   }
 });
 
@@ -35,7 +38,7 @@ router.post('/signup', async (req, res) => {
     const { first_name, last_name, email, username, password, terms } = req.body;
     let errors = [];
 
-    // Validation
+    // Validation rules
     if (!first_name || first_name.length > 30) errors.push("Invalid first name.");
     if (!last_name || last_name.length > 30) errors.push("Invalid last name.");
     if (!email || !/^[\w._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email) || email.length > 100) errors.push("Invalid email address.");
@@ -43,21 +46,21 @@ router.post('/signup', async (req, res) => {
     if (!password || password.length < 6 || password.length > 255) errors.push("Password must be between 6 and 255 characters.");
     if (!terms) errors.push("You must agree to the Terms & Conditions.");
 
-    // Check if already exists
+    // If no validation errors, check DB
     if (!errors.length) {
       const emailExists = await db.select('users', ['id'], 'email = ?', [email]);
       if (emailExists.length > 0) errors.push("This email exists!");
-      
+
       const usernameExists = await db.select('users', ['id'], 'username = ?', [username]);
       if (usernameExists.length > 0) errors.push("This username exists!");
     }
 
-    // Return validation errors
+    // If still errors, return them
     if (errors.length > 0) {
       return res.json({ success: false, errors });
     }
 
-    // Hash password & insert
+    // Insert user
     const hashedPassword = db.hashPassword(password);
     const result = await db.insert('users', {
       first_name: db.validate(first_name),
@@ -69,13 +72,14 @@ router.post('/signup', async (req, res) => {
 
     // Success check
     if (typeof result === 'number' && result > 0) {
-      return res.json({ success: true, redirect: '/login' }); // Auto-redirect to login
+      return res.json({ success: true, redirect: '/login' });
     } else {
       return res.json({ success: false, errors: ["Registration failed. Please try again later."] });
     }
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, errors: ["Server error during signup."] });
+    console.error('❌ Error during signup:', err);
+    return res.status(500).json({ success: false, errors: ["Server error during signup."] });
   }
 });
 
