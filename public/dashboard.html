@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard - HACKLINK TECH</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #5f2c82 0%, #49a09d 100%);
+        margin: 0;
+        min-height: 100vh;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .dashboard-container {
+        width: 90%;
+        max-width: 480px;
+        background: rgba(255,255,255,0.12);
+        padding: 2rem;
+        border-radius: 20px;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 0 25px rgba(0,0,0,0.3);
+    }
+    h1 {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: bold;
+        background: linear-gradient(90deg, #ff00ff, #00ffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 20px rgba(255,255,255,0.6);
+        margin-bottom: 1.5rem;
+    }
+    .btn {
+        display: block;
+        width: 100%;
+        padding: 0.9rem;
+        margin: 0.6rem 0;
+        border: none;
+        border-radius: 15px;
+        background: linear-gradient(90deg,#7b2ff2,#f357a8);
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+    .btn:hover {
+        background: linear-gradient(90deg,#f357a8,#7b2ff2);
+        transform: scale(1.05);
+    }
+    .coming-soon {
+        text-align: center;
+        font-size: 1rem;
+        margin-top: 20px;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: 0 0 8px #ff00ff, 0 0 12px #00ffff;
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+        from { text-shadow: 0 0 8px #ff00ff, 0 0 12px #00ffff; }
+        to { text-shadow: 0 0 18px #ff00ff, 0 0 24px #00ffff; }
+    }
+</style>
+</head>
+<body>
+<div class="dashboard-container">
+    <h1>Welcome, <span id="username">User</span>!</h1>
+
+    <button class="btn" onclick="alert('Founders page coming soon!')">
+        <i class="fas fa-users"></i> Founders
+    </button>
+    <button class="btn" onclick="alert('Info page coming soon!')">
+        <i class="fas fa-info-circle"></i> Info
+    </button>
+    <button class="btn" onclick="alert('Manage profile coming soon!')">
+        <i class="fas fa-user"></i> Manage Profile
+    </button>
+    <button class="btn" onclick="alert('Update credentials coming soon!')">
+        <i class="fas fa-key"></i> Update Credentials
+    </button>
+    <button class="btn" onclick="alert('Logging out...')">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+
+    <div class="coming-soon">✨ Other features coming soon... ✨</div>
+</div>
+
+<script>
+    // Example of dynamically setting username from local storage or JS
+    const storedUsername = localStorage.getItem("username") || "Guest";
+    document.getElementById("username").innerText = storedUsername;
+</script>
+</body>
+</html>
