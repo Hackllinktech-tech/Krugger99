@@ -19,26 +19,23 @@
       height: 100vh;
       background: radial-gradient(circle at top, #021B79, #0575E6);
     }
-
     .container {
       background: rgba(255, 255, 255, 0.05);
       padding: 40px;
       border-radius: 20px;
       box-shadow: 0 0 25px rgba(5, 230, 255, 0.5);
       width: 75vw;
-      height: 75vh;
+      height: auto;
       display: flex;
       flex-direction: column;
       justify-content: center;
       text-align: center;
     }
-
     h2 {
       color: #05e6ff;
       text-shadow: 0 0 10px #05e6ff;
       margin-bottom: 25px;
     }
-
     input {
       width: 80%;
       padding: 12px;
@@ -50,11 +47,9 @@
       font-size: 1rem;
       outline: none;
     }
-
     input:focus {
       box-shadow: 0 0 8px #05e6ff;
     }
-
     button {
       width: 80%;
       padding: 12px;
@@ -67,25 +62,20 @@
       cursor: pointer;
       margin-top: 12px;
     }
-
     button:hover {
       box-shadow: 0 0 15px #05e6ff;
     }
-
     .message {
       margin-top: 10px;
       color: #ff4d4d;
     }
-
     a {
       color: #05e6ff;
       text-decoration: none;
     }
-
     a:hover {
       text-shadow: 0 0 5px #05e6ff;
     }
-
     @media (max-width: 768px) {
       .container {
         width: 90vw;
@@ -110,9 +100,68 @@
       <input type="password" name="password" placeholder="Password" required>
       <button type="submit"><i class="fas fa-user-plus"></i> Register</button>
     </form>
-    <p>Already have an account? <a href="/login">Login here</a></p>
+    <p>Already have an account? <a href="/login.html">Login here</a></p>
+    <div class="message" id="form-message"></div>
   </div>
 
-  <script src="signup.js"></script>
+  <script>
+    // Live username check (optional)
+    document.getElementById('username').addEventListener('blur', async () => {
+      const username = document.getElementById('username').value.trim();
+      const statusEl = document.getElementById('username-status');
+      if (!username) {
+        statusEl.textContent = '';
+        return;
+      }
+      try {
+        const res = await fetch(`/check-username?username=${encodeURIComponent(username)}`);
+        const data = await res.json();
+        if (data.available) {
+          statusEl.style.color = 'lightgreen';
+          statusEl.textContent = '✅ Username available';
+        } else {
+          statusEl.style.color = 'red';
+          statusEl.textContent = '❌ Username already taken';
+        }
+      } catch {
+        statusEl.style.color = 'orange';
+        statusEl.textContent = '⚠️ Could not check username';
+      }
+    });
+
+    // Signup form handler
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formMessage = document.getElementById('form-message');
+      formMessage.textContent = '';
+
+      const formData = new FormData(e.target);
+      const body = {};
+      formData.forEach((v, k) => body[k] = v);
+
+      try {
+        const res = await fetch('/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          formMessage.style.color = 'lightgreen';
+          formMessage.textContent = '✅ Registration successful! Redirecting...';
+          setTimeout(() => {
+            window.location.href = '/login.html';
+          }, 1500);
+        } else {
+          formMessage.style.color = 'red';
+          formMessage.textContent = data.errors ? data.errors.join(', ') : 'Registration failed';
+        }
+      } catch (err) {
+        formMessage.style.color = 'red';
+        formMessage.textContent = '⚠️ Server error';
+      }
+    });
+  </script>
 </body>
 </html>
