@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HACKLINK TECH Login</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: radial-gradient(circle at top, #0d0d0d, #1a1a1a);
+        overflow: hidden;
+    }
+    body::before {
+        content: '';
+        position: absolute;
+        width: 300%;
+        height: 300%;
+        background: conic-gradient(#ff00aa, #9900ff, #00ffee, #ff00aa);
+        animation: spin 10s linear infinite;
+        filter: blur(200px);
+        z-index: 0;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .login-box {
+        position: relative;
+        z-index: 1;
+        background: rgba(20, 20, 20, 0.9);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 0 25px rgba(255, 0, 100, 0.6);
+        width: 350px;
+        text-align: center;
+        color: #fff;
+        animation: fadeIn 0.8s ease-in-out;
+    }
+    h1 { font-size: 1.8rem; margin-bottom: 1.5rem; text-shadow: 0 0 10px #ff00aa; }
+    .form-group { margin-bottom: 1rem; text-align: left; position: relative; }
+    label { font-size: 0.9rem; color: #ccc; }
+    input {
+        width: 100%;
+        padding: 0.7rem 2.5rem 0.7rem 0.7rem;
+        margin-top: 0.4rem;
+        border: none;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+    input:focus { box-shadow: 0 0 15px #ff00aa; background: rgba(255, 255, 255, 0.15); }
+    .password-toggle {
+        position: absolute;
+        right: 10px;
+        top: 57%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #ff00aa;
+        cursor: pointer;
+        font-size: 1.1rem;
+    }
+    button {
+        width: 100%;
+        padding: 0.8rem;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(90deg, #ff00aa, #9900ff);
+        color: #fff;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover { transform: scale(1.05); box-shadow: 0 0 20px #ff00aa; }
+    p { margin-top: 1rem; font-size: 0.9rem; }
+    p a { color: #ff00aa; text-decoration: none; }
+    @keyframes fadeIn { from {opacity: 0; transform: translateY(-20px);} to {opacity: 1; transform: translateY(0);} }
+</style>
+</head>
+<body>
+<div class="login-box">
+    <h1>HACKLINK TECH Login</h1>
+    <form id="loginForm">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" required maxlength="30">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" id="password" required maxlength="255">
+            <button type="button" class="password-toggle" onclick="togglePassword()">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="../signup/index.html">Sign Up</a></p>
+</div>
+
+<script>
+function togglePassword() {
+    const pass = document.getElementById("password");
+    const icon = document.querySelector(".password-toggle i");
+    if (pass.type === "password") {
+        pass.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+        pass.type = "password";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
+    }
+}
+
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("Login button clicked! (Here you would add backend login code.)");
+});
+</script>
+</body>
+</html>
