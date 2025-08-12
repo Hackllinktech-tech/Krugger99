@@ -1,126 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HACKLINK TECH Login</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HACKLINK TECH — Login (HTML)</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
-    body {
-        margin: 0;
-        font-family: 'Poppins', sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background: radial-gradient(circle at top, #0d0d0d, #1a1a1a);
-        overflow: hidden;
-    }
-    body::before {
-        content: '';
-        position: absolute;
-        width: 300%;
-        height: 300%;
-        background: conic-gradient(#ff00aa, #9900ff, #00ffee, #ff00aa);
-        animation: spin 10s linear infinite;
-        filter: blur(200px);
-        z-index: 0;
-    }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .login-box {
-        position: relative;
-        z-index: 1;
-        background: rgba(20, 20, 20, 0.9);
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 0 25px rgba(255, 0, 100, 0.6);
-        width: 350px;
-        text-align: center;
-        color: #fff;
-        animation: fadeIn 0.8s ease-in-out;
-    }
-    h1 { font-size: 1.8rem; margin-bottom: 1.5rem; text-shadow: 0 0 10px #ff00aa; }
-    .form-group { margin-bottom: 1rem; text-align: left; position: relative; }
-    label { font-size: 0.9rem; color: #ccc; }
-    input {
-        width: 100%;
-        padding: 0.7rem 2.5rem 0.7rem 0.7rem;
-        margin-top: 0.4rem;
-        border: none;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-        font-size: 1rem;
-        outline: none;
-        transition: all 0.3s ease;
-    }
-    input:focus { box-shadow: 0 0 15px #ff00aa; background: rgba(255, 255, 255, 0.15); }
-    .password-toggle {
-        position: absolute;
-        right: 10px;
-        top: 57%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: #ff00aa;
-        cursor: pointer;
-        font-size: 1.1rem;
-    }
-    button {
-        width: 100%;
-        padding: 0.8rem;
-        border: none;
-        border-radius: 8px;
-        background: linear-gradient(90deg, #ff00aa, #9900ff);
-        color: #fff;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-    button:hover { transform: scale(1.05); box-shadow: 0 0 20px #ff00aa; }
-    p { margin-top: 1rem; font-size: 0.9rem; }
-    p a { color: #ff00aa; text-decoration: none; }
-    @keyframes fadeIn { from {opacity: 0; transform: translateY(-20px);} to {opacity: 1; transform: translateY(0);} }
+  :root{--accent:#ff00aa;--accent2:#9900ff}
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Poppins',sans-serif;
+    background:radial-gradient(circle at top,#0d0d0d,#1a1a1a);
+    color:#fff;
+  }
+
+  /* glow bg */
+  body::before{
+    content:'';
+    position:fixed; inset:-50%;
+    background:conic-gradient(var(--accent),var(--accent2),#00ffee,var(--accent));
+    filter:blur(200px);
+    z-index:0;
+    animation:spin 14s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .login-box{
+    position:relative;
+    z-index:1;
+    width:360px;
+    max-width:92vw;
+    padding:1.85rem;
+    border-radius:14px;
+    background:rgba(20,20,20,0.9);
+    box-shadow:0 8px 40px rgba(0,0,0,0.6);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+
+  h1{margin:0 0 1rem;font-size:1.4rem;text-align:center;text-shadow:0 0 8px var(--accent)}
+
+  .form-group{position:relative;margin-bottom:1rem}
+  label{display:block;color:#cfcfcf;font-size:0.9rem;margin-bottom:6px}
+
+  /* IMPORTANT: plenty of right padding so text doesn't hide behind the icon */
+  input[type="text"],
+  input[type="password"]{
+    width:100%;
+    padding:0.7rem 3.6rem 0.7rem 0.8rem; /* right padding leaves room for icon */
+    border-radius:8px;
+    border:none;
+    background:rgba(255,255,255,0.06);
+    color:#fff;
+    font-size:1rem;
+    outline:none;
+    transition:box-shadow .15s;
+  }
+  input:focus{box-shadow:0 0 12px rgba(255,0,170,0.18); background:rgba(255,255,255,0.08)}
+
+  /* eye button placed inside the input at far-right */
+  .password-toggle{
+    position:absolute;
+    right:8px;               /* distance from right edge */
+    top:50%;
+    transform:translateY(-50%);
+    height:34px;
+    width:34px;
+    border-radius:6px;
+    border:none;
+    background:transparent;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:3;
+    padding:0;
+  }
+  .password-toggle:focus{outline:2px solid rgba(255,0,170,0.18)}
+
+  button[type="submit"]{
+    width:100%;
+    margin-top:6px;
+    padding:0.8rem;
+    border-radius:8px;
+    border:none;
+    font-weight:700;
+    color:#fff;
+    background:linear-gradient(90deg,var(--accent),var(--accent2));
+    cursor:pointer;
+  }
+  button[type="submit"]:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,0,170,0.15)}
+
+  .meta{margin-top:12px;text-align:center;color:#cfcfcf;font-size:0.95rem}
+  .meta a{color:var(--accent);text-decoration:none}
+  @media (max-width:420px){
+    .login-box{padding:1.2rem}
+    input{padding:0.6rem 3.6rem 0.6rem 0.6rem}
+    .password-toggle{height:30px;width:30px;right:6px}
+  }
 </style>
 </head>
 <body>
-<div class="login-box">
-    <h1>HACKLINK TECH Login</h1>
-    <form id="loginForm">
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="username" required maxlength="30">
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" id="password" required maxlength="255">
-            <button type="button" class="password-toggle" onclick="togglePassword()">
-                <i class="fas fa-eye"></i>
-            </button>
-        </div>
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="../signup/index.html">Sign Up</a></p>
+
+<div class="login-box" role="main" aria-labelledby="loginTitle">
+  <h1 id="loginTitle">HACKLINK TECH Login</h1>
+
+  <form id="loginForm" autocomplete="on">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" maxlength="30" required />
+    </div>
+
+    <div class="form-group" style="margin-bottom:0.6rem;">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" maxlength="255" required aria-describedby="pwToggleDesc" />
+      <button type="button" class="password-toggle" id="pwToggle" aria-label="Show password" aria-pressed="false">
+        <i class="fas fa-eye" id="pwIcon" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <div class="meta">Don't have an account? <a href="../signup/index.html">Sign Up</a></div>
 </div>
 
 <script>
-function togglePassword() {
-    const pass = document.getElementById("password");
-    const icon = document.querySelector(".password-toggle i");
-    if (pass.type === "password") {
-        pass.type = "text";
-        icon.classList.replace("fa-eye", "fa-eye-slash");
-    } else {
-        pass.type = "password";
-        icon.classList.replace("fa-eye-slash", "fa-eye");
-    }
-}
+  // Toggle password visibility, keep caret/focus in password
+  const pw = document.getElementById('password');
+  const pwToggle = document.getElementById('pwToggle');
+  const pwIcon = document.getElementById('pwIcon');
 
-document.getElementById("loginForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    alert("Login button clicked! (Here you would add backend login code.)");
-});
+  pwToggle.addEventListener('click', () => {
+    const isPassword = pw.type === 'password';
+    const caret = pw.selectionStart; // preserve caret
+    pw.type = isPassword ? 'text' : 'password';
+    pwIcon.classList.toggle('fa-eye');
+    pwIcon.classList.toggle('fa-eye-slash');
+    pwToggle.setAttribute('aria-pressed', String(isPassword));
+    // restore focus and caret position
+    pw.focus();
+    try { pw.setSelectionRange(caret, caret); } catch(e) {}
+  });
+
+  // Example: real submission handler (AJAX) placeholder
+  document.getElementById('loginForm').addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const data = {
+      username: document.getElementById('username').value.trim(),
+      password: document.getElementById('password').value
+    };
+    // Hook your own signup.js or AJAX here. For demo:
+    console.log('Login submitted', data);
+    // simulate success and redirect:
+    alert('Login clicked — implement backend call in signup.js / login.js');
+  });
 </script>
+
 </body>
 </html>
